@@ -66,5 +66,36 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById('nombre').addEventListener('input', function (e) {
+        // Solo permite letras y espacios (mayúsculas y minúsculas)
+        const soloLetras = e.target.value.replace(/[^a-zA-ZÁÉÍÓÚáéíóúÑñ\s]/g, '');
+        e.target.value = soloLetras;
+    });
+
+    const docInput = document.getElementById('documento');
+
+    docInput.addEventListener('input', function (e) {
+        // Elimina todo lo que no sea número
+        let value = e.target.value.replace(/\D/g, '');
+
+        // Limita a 9 dígitos
+        value = value.slice(0, 9);
+
+        // Formatea como ########-#
+        if (value.length > 8) {
+            value = value.slice(0, 8) + '-' + value.slice(8);
+        }
+
+        e.target.value = value;
+    });
+
+    document.getElementById('telefono').addEventListener('input', function (e) {
+        // Elimina cualquier carácter que no sea número
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+</script>
+
 </body>
 </html>

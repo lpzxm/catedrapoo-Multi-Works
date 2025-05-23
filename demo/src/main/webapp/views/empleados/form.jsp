@@ -78,5 +78,34 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Validar campo Nombre: solo letras y espacios
+    document.getElementById('nombre').addEventListener('input', function (e) {
+        e.target.value = e.target.value.replace(/[^a-zA-ZÁÉÍÓÚáéíóúÑñ\s]/g, '');
+    });
+
+    // Validar campo Documento: solo números y formato ########-#
+    const docInput = document.getElementById('documento');
+    docInput.addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, ''); // Solo dígitos
+        value = value.slice(0, 9); // Máximo 9 dígitos
+        if (value.length > 8) {
+            value = value.slice(0, 8) + '-' + value.slice(8);
+        }
+        e.target.value = value;
+    });
+    docInput.addEventListener('blur', function (e) {
+        if (!/^\d{8}-\d$/.test(e.target.value)) {
+            alert('El formato del DUI debe ser ########-#');
+            e.target.focus();
+        }
+    });
+
+    // Validar campo Teléfono: solo números
+    document.getElementById('telefono').addEventListener('input', function (e) {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+</script>
+
 </body>
 </html>

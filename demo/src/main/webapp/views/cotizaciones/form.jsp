@@ -53,5 +53,49 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const fechaInicio = document.getElementById('fechaTentativaInicio');
+        const fechaFin = document.getElementById('fechaTentativaFin');
+
+        // Establecer el mínimo de fecha de inicio como hoy
+        const today = new Date().toISOString().split('T')[0];
+        fechaInicio.setAttribute('min', today);
+
+        // Crear contenedor para el mensaje de validación
+        const alerta = document.createElement('div');
+        alerta.className = 'alert alert-danger mt-2';
+        alerta.style.display = 'none';
+        fechaFin.parentElement.appendChild(alerta);
+
+        // Validar fechas
+        function validarFechas() {
+            const inicio = new Date(fechaInicio.value);
+            const fin = new Date(fechaFin.value);
+
+            if (fechaInicio.value && fechaFin.value && fin <= inicio) {
+                alerta.textContent = 'La fecha de fin debe ser mayor que la fecha de inicio.';
+                alerta.style.display = 'block';
+                fechaFin.setCustomValidity('La fecha de fin debe ser mayor.');
+            } else {
+                alerta.style.display = 'none';
+                fechaFin.setCustomValidity('');
+            }
+        }
+
+        fechaInicio.addEventListener('change', function () {
+            // También actualizamos el mínimo de fecha de fin
+            if (fechaInicio.value) {
+                fechaFin.setAttribute('min', fechaInicio.value);
+            } else {
+                fechaFin.removeAttribute('min');
+            }
+            validarFechas();
+        });
+
+        fechaFin.addEventListener('change', validarFechas);
+    });
+</script>
+
 </body>
 </html>
